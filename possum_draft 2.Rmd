@@ -1,0 +1,116 @@
+---
+title: "Possums are Awesome"
+author: "April & Yi"
+date: "Winter 2019"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Set Background
+The possum data frame consists of nine morphometric measurements on 104 mountain brushtail possums, trapped at seven sites from Southern Victoria to central Queensland. In 2002, they were proposed to be reclassified into two separate species: the mountain brushtail and short-eared.  
+
+Source
+> Lindenmayer, D. B., Viggers, K. L., Cunningham, R. B., and Donnelly, C. F. 1995. Morphological variation among columns of the mountain brushtail possum, Trichosurus caninus Ogilby (Phalangeridae: Marsupiala). Australian Journal of Zoology 43: 449-458.
+
+> URL: https://vincentarelbundock.github.io/Rdatasets/datasets.html
+
+## Load libraries
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(skimr)
+library("RColorBrewer")
+```
+
+## Read data
+```{r message=FALSE, warning=FALSE}
+ possum <- 
+   readr::read_csv(file = "possum.csv", 
+   na = c("", " ", "NA", "#N/A", "-999", "\\"))
+```
+
+```{r}
+# Check dimensions
+dim(possum)
+
+# Check for NA's
+##install.packages("skimr")
+possum %>% 
+  skimr::skim()
+
+# Check column names
+colnames(possum)
+```
+
+## Renaming variables for consistency
+```{r}
+possum <-
+  possum%>% 
+  dplyr::rename(
+    pop = Pop, #population
+    foot = footlgth, #foot length
+    head = hdlngth, #head length
+    skull = skullw, #skull width
+    tail = taill, #tail length
+    tooth = totlngth #tooth length
+    ) 
+possum
+```
+
+## Dataset Cleaning-Up
+
+1. Is the data frame tidy? Why or why not?
+
+This data frame is not tidy, because the first column does not have a column name (it got assigned X1 as its name automatically by R).
+
+How to change that:
+
+```{r}
+
+
+```
+
+## NAs
+
+1. Identify the NAs.
+
+1) Which column has the most NAs? What is one possible reason for this?  
+
+
+
+# Potential questions to ask
+**Main question:**
+Is there a difference in possum morphology between populations in Victoria and populations outside of Victoria?
+(to see if this data can justify seperating the possum into two species by mophometrics)
+
+- insert more background info on the 2002 research that wanted to reclassify it into 2 different species, more stuff on organisms and external environment, phenotypic variation blahblah, hypothesis on whether we think victorian possums would look a certain way because of ____ or something  :) -
+
+**Sub questions: **
+1. Difference in ear conch length between both populations
+
+2. Correlation between age and ear conch length (because ear conch may shrink as possums age?)
+
+3. Compare ear conch length by sex in both populations (in case different genders of possum have different ear conch size)
+
+4. 
+
+5. 
+
+6. 
+
+
+# Conclusion 
+
+(in the event that we can't find much of a correlation, we explain why we think so)
+
+
+**Here's some outside research on the possums:**
+
+*Australian museum*
+https://australianmuseum.net.au/learn/animals/mammals/mammology-collection-mountain-brushtail-possum/
+*Geographic dimorphism in the mountain brushtail possum (Trichosurus caninus): The case for a new species*
+https://www.researchgate.net/publication/240510066_Geographic_dimorphism_in_the_mountain_brushtail_possum_Trichosurus_caninus_The_case_for_a_new_species
