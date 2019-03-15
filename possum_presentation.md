@@ -214,7 +214,8 @@ Sub Question 2: Correlation between age and ear conch length?
 ```r
 possum %>% 
   ggplot(aes(x=age, y=earconch, color = pop))+ geom_point()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Age", y= "Ear Conch Length")+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", 
+       x= "Age", y= "Ear Conch Length")+
   scale_color_brewer(palette = "Set1")
 ```
 
@@ -227,7 +228,8 @@ Sub Question 3: Comparision of ear conch length by sex in both populations?
 
 ```r
 possum %>% ggplot(aes(x=sex, y=earconch, color = pop))+ geom_point()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Sex", y= "Ear Conch Length")+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", 
+       x= "Sex", y= "Ear Conch Length")+
   scale_color_brewer(palette = "Set1")
 ```
 
@@ -243,7 +245,7 @@ Examine if it is true that the two populations of possum show little sexual dimo
 
 Sub Question 1
 ========================================================
-Count of females and males in both populations.
+What is the count of females and males in both populations?
 
 ========================================================
 
@@ -295,7 +297,7 @@ Sub Question 2: Morphologies by Populations by sex
 # Morphologies of Possums by Sex in Victoria
 possum %>% filter(pop == "Vic") %>% gather(head, skull, tooth, tail, foot, earconch, eye, chest, belly, key=morph, value=measure) %>% group_by(sex) %>% 
   ggplot(aes(x=morph, y=measure, fill=sex))+ geom_boxplot()+
-  labs(title = "Morphologies of Possums by Sex in Victoria", x= "Sex", y= "Count")+ scale_fill_brewer(palette = "Set1")
+  labs(title = "Morphologies of Possums by Sex in Victoria", x= "Sex", y= "Count")+scale_fill_brewer(palette = "Set1")
 ```
 
 ![plot of chunk unnamed-chunk-15](possum_presentation-figure/unnamed-chunk-15-1.png)
