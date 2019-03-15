@@ -9,7 +9,7 @@ output:
 
 
 
-## Data Set Background
+# Data Set Background
 The possum data frame consists of nine morphometric measurements on 104 mountain brushtail possums, trapped at seven sites from Southern Victoria to central Queensland. In 2002, they were proposed to be reclassified into two separate species: the mountain brushtail and short-eared.  
 
 Source
@@ -41,6 +41,17 @@ dim(possum)
 
 ```
 ## [1] 104  15
+```
+
+```r
+# Check column names
+colnames(possum)
+```
+
+```
+##  [1] "X1"       "case"     "site"     "Pop"      "sex"      "age"     
+##  [7] "hdlngth"  "skullw"   "totlngth" "taill"    "footlgth" "earconch"
+## [13] "eye"      "chest"    "belly"
 ```
 
 ```r
@@ -90,17 +101,6 @@ possum %>%
 ##  <U+2581><U+2581><U+2585><U+2586><U+2583><U+2587><U+2583><U+2581>
 ```
 
-```r
-# Check column names
-colnames(possum)
-```
-
-```
-##  [1] "X1"       "case"     "site"     "Pop"      "sex"      "age"     
-##  [7] "hdlngth"  "skullw"   "totlngth" "taill"    "footlgth" "earconch"
-## [13] "eye"      "chest"    "belly"
-```
-
 ## Renaming variables for consistency
 
 ```r
@@ -135,7 +135,7 @@ possum
 ## #   chest <dbl>, belly <dbl>
 ```
 
-## Dataset Cleaning-Up
+# Dataset Cleaning-Up
 Is the data frame tidy? Why or why not?
 
 This data frame is not tidy, because the first column does not have a column name (it got assigned X1 as its name automatically by R).
@@ -163,10 +163,9 @@ colnames(possum)<-c("sample",
 
 We've also noticed that the columns are variables, so that would need to be addressed later on when we start using the data to make visualizations. 
 
-## NAs
-Identify the NAs.
+## Identifying the NA's
 
-Which column has the most NAs? 
+Which column has the most NA's? 
 
 ```r
 possum %>%   
@@ -196,16 +195,16 @@ possum %>%
 ## 15 belly           0
 ```
 
-Age had the most NAs (two of them), followed by foot length (only one).
+Age had the most NA's (two of them), followed by foot length (only one).
 
 Why?
 - For some samples, age might not be easy to identify. 
 - There might be some data missing since this is an old research. 
 
-## Research Topic
+# Research Topic
 In 2002, it was proposed that the mountain brushtail possum be reclassified into two distinct species: the northern short-eared possum and the southern mountain brushtail possum. Can this dataset justify separating the possum into two species by morphometrics?
 
-## **Main question 1**
+## **Main Question 1**
 Is there a difference in possum morphology between populations in Victoria (the south) and populations outside of Victoria (the north)?
 
 
@@ -231,7 +230,7 @@ possum %>%
 
 There's a greater difference in earconch and foot length between the two populations. We expected a difference in earconch lengths since it is the defining morphological difference between the two proposed species of possums.
 
-## **Sub questions**
+### **Sub Questions**
 1. Difference in ear conch length between both populations
 
 ```r
@@ -294,7 +293,7 @@ No correlation between sex and ear conch length. Males and females of the same p
 The mountain brushtail possum shows little sexual dimorphism, meaning that the females and males of this species show little distinct characteristics beyond their sexual organs.
 Examine if it is true that the two populations of possum show little sexual dimorphism. 
 
-## **Sub questions**
+### **Sub questions**
 1. Count of females and males in both populations.
 
 ```r
@@ -326,6 +325,7 @@ possum %>%
 ```
 
 ![](possum_final_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+
 The ratio of female to male is almost 2:1 in the short-eared possums outside of Victoria. This suggests that the short-eared possums are polygynous while the mountain brushtail possums are monogamous, further justifying their split as two different species. 
 
 
@@ -342,11 +342,13 @@ possum %>%
 ```
 
 ![](possum_final_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
 The Victoria population has relatively similar shaped densities while the population outside of Victoria has a noticeably smaller female density to male density. 
 
 2. Morphologies by Populations by sex
 
 ```r
+# Morphologies of Possums by Sex in Victoria
 possum %>% 
   filter(pop == "Vic") %>% 
   gather(head, skull, tooth, tail, foot, earconch, eye, chest, belly, key=morph, value=measure) %>%
@@ -364,10 +366,12 @@ possum %>%
 ```
 
 ![](possum_final_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+
 Female and male mountain brushtail possums in Victoria have similar ranges of morphological characteristics, furthering how this particular species display little sexual dimorphism. 
 
 
 ```r
+# Morphologies of Possums by Sex Outside of Victoria
 possum %>% 
   filter(pop == "other") %>% 
   gather(head, skull, tooth, tail, foot, earconch, eye, chest, belly, key=morph, value=measure) %>%
@@ -381,6 +385,7 @@ possum %>%
 ```
 
 ![](possum_final_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
 The males of the short-eared possums population outside of Victoria display a wider range of morphological characteristics than females. 
 
 
@@ -390,6 +395,6 @@ In conclusion, we agree with the justifications for splitting the possums into t
 
 ## **Here's some outside research on the possums:**
 *Australian museum*
-https://australianmuseum.net.au/learn/animals/mammals/mammology-collection-mountain-brushtail-possum/
+https://australianmuseum.net.au/learn/animals/mammals/mammology-collection-mountain-brushtail-possum/  <br /> 
 *Geographic dimorphism in the mountain brushtail possum (Trichosurus caninus): The case for a new species*
 https://www.researchgate.net/publication/240510066_Geographic_dimorphism_in_the_mountain_brushtail_possum_Trichosurus_caninus_The_case_for_a_new_species
