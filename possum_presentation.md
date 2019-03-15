@@ -28,8 +28,7 @@ library("RColorBrewer")
 
 ```r
  possum <- 
-   readr::read_csv(file = "possum.csv", 
-   na = c("", " ", "NA", "#N/A", "-999", "\\"))
+   readr::read_csv(file = "possum.csv", na = c("", " ", "NA", "#N/A", "-999", "\\"))
 ```
 
 Overview of Data
@@ -60,8 +59,7 @@ colnames(possum)
 ```r
 # Check for NA's
 ##install.packages("skimr")
-possum %>% 
-  skimr::skim()
+possum %>% skimr::skim()
 ```
 
 ```
@@ -118,25 +116,6 @@ possum <-
     tail = taill, #tail length
     tooth = totlngth #tooth length
     ) 
-possum
-```
-
-```
-# A tibble: 104 x 15
-   X1     case  site pop   sex     age  head skull tooth  tail  foot
-   <chr> <dbl> <dbl> <chr> <chr> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
- 1 C3        1     1 Vic   m         8  94.1  60.4  89    36    74.5
- 2 C5        2     1 Vic   f         6  92.5  57.6  91.5  36.5  72.5
- 3 C10       3     1 Vic   f         6  94    60    95.5  39    75.4
- 4 C15       4     1 Vic   f         6  93.2  57.1  92    38    76.1
- 5 C23       5     1 Vic   f         2  91.5  56.3  85.5  36    71  
- 6 C24       6     1 Vic   f         1  93.1  54.8  90.5  35.5  73.2
- 7 C26       7     1 Vic   m         2  95.3  58.2  89.5  36    71.5
- 8 C27       8     1 Vic   f         6  94.8  57.6  91    37    72.7
- 9 C28       9     1 Vic   f         9  93.4  56.3  91.5  37    72.4
-10 C31      10     1 Vic   f         6  91.8  58    89.5  37.5  70.9
-# ... with 94 more rows, and 4 more variables: earconch <dbl>, eye <dbl>,
-#   chest <dbl>, belly <dbl>
 ```
 
 Dataset Cleaning-Up
@@ -184,7 +163,7 @@ possum %>%
 15 belly           0
 ```
 
-========================================================
+***
 Age had the most NA's (two of them), followed by foot length (only one).
 
 Why?
@@ -205,11 +184,10 @@ Is there a difference in possum morphology between populations in Victoria (the 
 
 ```r
 possum %>% gather(head, skull, tooth, tail, foot, earconch, eye, chest, belly, key=morph, value=measure) %>% group_by(pop) %>% 
-  ggplot(aes(x=morph, y=measure, fill=pop))+
-    geom_boxplot()+
-    labs(title="Morphologies by Population", x = "Morphology", y = "Measures")+
+  ggplot(aes(x=morph, y=measure, fill=pop))+ geom_boxplot()+
+  labs(title="Morphologies by Population", x = "Morphology", y = "Measures")+
   theme(plot.title = element_text(face="bold", hjust = 0.5))+
-  scale_fill_brewer(palette = "Accent")
+  scale_fill_brewer(palette = "Set1")
 ```
 
 ![plot of chunk unnamed-chunk-8](possum_presentation-figure/unnamed-chunk-8-1.png)
@@ -221,12 +199,9 @@ Sub Question 1: Difference in ear conch length between both populations?
 
 ```r
 possum %>% 
-  ggplot(aes(x=age, y=earconch, fill = pop))+
-  geom_boxplot()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length",
-       x= "Age",
-       y= "Ear Conch Length")+
-  scale_fill_brewer(palette = "Accent")
+  ggplot(aes(x=age, y=earconch, fill = pop))+ geom_boxplot()+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Age", y= "Ear Conch Length")+
+  scale_fill_brewer(palette = "Set1")
 ```
 
 ![plot of chunk unnamed-chunk-9](possum_presentation-figure/unnamed-chunk-9-1.png)
@@ -238,12 +213,9 @@ Sub Question 2: Correlation between age and ear conch length?
 
 ```r
 possum %>% 
-  ggplot(aes(x=age, y=earconch, color = pop))+
-  geom_point()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length",
-       x= "Age",
-       y= "Ear Conch Length")+
-  scale_color_brewer(palette = "Accent")
+  ggplot(aes(x=age, y=earconch, color = pop))+ geom_point()+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Age", y= "Ear Conch Length")+
+  scale_color_brewer(palette = "Set1")
 ```
 
 ![plot of chunk unnamed-chunk-10](possum_presentation-figure/unnamed-chunk-10-1.png)
@@ -254,13 +226,9 @@ Sub Question 3: Comparision of ear conch length by sex in both populations?
 ========================================================
 
 ```r
-possum %>% 
-  ggplot(aes(x=sex, y=earconch, color = pop))+
-  geom_point()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length",
-       x= "Sex",
-       y= "Ear Conch Length")+
-  scale_color_brewer(palette = "Accent")
+possum %>% ggplot(aes(x=sex, y=earconch, color = pop))+ geom_point()+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Sex", y= "Ear Conch Length")+
+  scale_color_brewer(palette = "Set1")
 ```
 
 ![plot of chunk unnamed-chunk-11](possum_presentation-figure/unnamed-chunk-11-1.png)
@@ -281,13 +249,9 @@ Count of females and males in both populations.
 
 ```r
 # Count of Possums by Sex in Victoria
-possum %>% 
-  filter (pop == "Vic") %>% 
-  ggplot(aes(x=sex, fill=sex))+
-  geom_bar()+
-  labs(title = "Count of Possums by Sex in Victoria",
-       x= "Sex",
-       y= "Count")+
+possum %>% filter (pop == "Vic") %>% 
+  ggplot(aes(x=sex, fill=sex))+ geom_bar()+
+  labs(title = "Count of Possums by Sex in Victoria", x= "Sex", y= "Count")+
   scale_fill_brewer(palette = "Set1")
 ```
 
@@ -299,13 +263,9 @@ We can see that there is a relatively equal ratio of female to male in the mount
 
 ```r
 # Count of Possums by Sex Outside of Victoria
-possum %>% 
-  filter (pop == "other") %>% 
-  ggplot(aes(x=sex, fill=sex))+
-  geom_bar()+
-  labs(title = "Count of Possums by Sex Outside of Victoria",
-       x= "Sex",
-       y= "Count")+
+possum %>% filter (pop == "other") %>% 
+  ggplot(aes(x=sex, fill=sex))+ geom_bar()+
+  labs(title = "Count of Possums by Sex Outside of Victoria", x= "Sex", y= "Count")+
   scale_fill_brewer(palette = "Set1")
 ```
 
@@ -318,13 +278,10 @@ The ratio of female to male is almost 2:1 in the short-eared possums outside of 
 ```r
 # Compare relative densities of sex by population
 possum %>% 
-  ggplot(aes(x=pop, y=sex, color=pop))+
-  geom_count()+  #this is a count plot
+  ggplot(aes(x=pop, y=sex, color=pop))+ geom_count()+  #this is a count plot
   scale_size_area(max_size = 28)+
-  labs(title="Density of Sex by Population", 
-       x="Population", 
-       y="Sex")+
-  scale_color_brewer(palette = "Accent")
+  labs(title="Density of Sex by Population", x="Population", y="Sex")+
+  scale_color_brewer(palette = "Set1")
 ```
 
 ![plot of chunk unnamed-chunk-14](possum_presentation-figure/unnamed-chunk-14-1.png)
@@ -338,8 +295,7 @@ Sub Question 2: Morphologies by Populations by sex
 # Morphologies of Possums by Sex in Victoria
 possum %>% filter(pop == "Vic") %>% gather(head, skull, tooth, tail, foot, earconch, eye, chest, belly, key=morph, value=measure) %>% group_by(sex) %>% 
   ggplot(aes(x=morph, y=measure, fill=sex))+ geom_boxplot()+
-  labs(title = "Morphologies of Possums by Sex in Victoria", x= "Sex", y= "Count")+
-  scale_fill_brewer(palette = "Set1")
+  labs(title = "Morphologies of Possums by Sex in Victoria", x= "Sex", y= "Count")+ scale_fill_brewer(palette = "Set1")
 ```
 
 ![plot of chunk unnamed-chunk-15](possum_presentation-figure/unnamed-chunk-15-1.png)

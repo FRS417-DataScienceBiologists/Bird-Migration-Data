@@ -26,8 +26,7 @@ library("RColorBrewer")
 ```
 ```{r message=FALSE, warning=FALSE}
  possum <- 
-   readr::read_csv(file = "possum.csv", 
-   na = c("", " ", "NA", "#N/A", "-999", "\\"))
+   readr::read_csv(file = "possum.csv", na = c("", " ", "NA", "#N/A", "-999", "\\"))
 ```
 
 Overview of Data
@@ -44,8 +43,7 @@ colnames(possum)
 ```{r}
 # Check for NA's
 ##install.packages("skimr")
-possum %>% 
-  skimr::skim()
+possum %>% skimr::skim()
 ```
 
 Renaming variables for consistency
@@ -61,7 +59,6 @@ possum <-
     tail = taill, #tail length
     tooth = totlngth #tooth length
     ) 
-possum
 ```
 
 Dataset Cleaning-Up
@@ -86,7 +83,7 @@ possum %>%
   arrange(desc(num_nas))
 ```
 
-========================================================
+***
 Age had the most NA's (two of them), followed by foot length (only one).
 
 Why?
@@ -106,11 +103,10 @@ Is there a difference in possum morphology between populations in Victoria (the 
 ========================================================
 ```{r}
 possum %>% gather(head, skull, tooth, tail, foot, earconch, eye, chest, belly, key=morph, value=measure) %>% group_by(pop) %>% 
-  ggplot(aes(x=morph, y=measure, fill=pop))+
-    geom_boxplot()+
-    labs(title="Morphologies by Population", x = "Morphology", y = "Measures")+
+  ggplot(aes(x=morph, y=measure, fill=pop))+ geom_boxplot()+
+  labs(title="Morphologies by Population", x = "Morphology", y = "Measures")+
   theme(plot.title = element_text(face="bold", hjust = 0.5))+
-  scale_fill_brewer(palette = "Accent")
+  scale_fill_brewer(palette = "Set1")
 ```
 
 There's a greater difference in earconch and foot length between the two populations. We expected a difference in earconch lengths since it is the defining morphological difference between the two proposed species of possums.
@@ -119,12 +115,9 @@ Sub Question 1: Difference in ear conch length between both populations?
 ========================================================
 ```{r}
 possum %>% 
-  ggplot(aes(x=age, y=earconch, fill = pop))+
-  geom_boxplot()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length",
-       x= "Age",
-       y= "Ear Conch Length")+
-  scale_fill_brewer(palette = "Accent")
+  ggplot(aes(x=age, y=earconch, fill = pop))+ geom_boxplot()+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Age", y= "Ear Conch Length")+
+  scale_fill_brewer(palette = "Set1")
 ```
 
 There is a significant difference in  ear conch length between two populations. 
@@ -133,12 +126,9 @@ Sub Question 2: Correlation between age and ear conch length?
 ========================================================
 ```{r}
 possum %>% 
-  ggplot(aes(x=age, y=earconch, color = pop))+
-  geom_point()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length",
-       x= "Age",
-       y= "Ear Conch Length")+
-  scale_color_brewer(palette = "Accent")
+  ggplot(aes(x=age, y=earconch, color = pop))+ geom_point()+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Age", y= "Ear Conch Length")+
+  scale_color_brewer(palette = "Set1")
 ```
 
 No correlation between age and ear conch length. The difference in ear conch leangth is very likely to be determined solely by the population that they belong to. 
@@ -146,13 +136,9 @@ No correlation between age and ear conch length. The difference in ear conch lea
 Sub Question 3: Comparision of ear conch length by sex in both populations?
 ========================================================
 ```{r}
-possum %>% 
-  ggplot(aes(x=sex, y=earconch, color = pop))+
-  geom_point()+
-  labs(title = "Relationship Between Possum Age and Ear Conch Length",
-       x= "Sex",
-       y= "Ear Conch Length")+
-  scale_color_brewer(palette = "Accent")
+possum %>% ggplot(aes(x=sex, y=earconch, color = pop))+ geom_point()+
+  labs(title = "Relationship Between Possum Age and Ear Conch Length", x= "Sex", y= "Ear Conch Length")+
+  scale_color_brewer(palette = "Set1")
 ```
 
 No correlation between sex and ear conch length. Males and females of the same population display similar ear conch length. The difference in ear conch leangth is very likely to be determined solely by the population that they belong to. 
@@ -170,13 +156,9 @@ Count of females and males in both populations.
 ========================================================
 ```{r}
 # Count of Possums by Sex in Victoria
-possum %>% 
-  filter (pop == "Vic") %>% 
-  ggplot(aes(x=sex, fill=sex))+
-  geom_bar()+
-  labs(title = "Count of Possums by Sex in Victoria",
-       x= "Sex",
-       y= "Count")+
+possum %>% filter (pop == "Vic") %>% 
+  ggplot(aes(x=sex, fill=sex))+ geom_bar()+
+  labs(title = "Count of Possums by Sex in Victoria", x= "Sex", y= "Count")+
   scale_fill_brewer(palette = "Set1")
 ```
 
@@ -185,13 +167,9 @@ We can see that there is a relatively equal ratio of female to male in the mount
 ========================================================
 ```{r}
 # Count of Possums by Sex Outside of Victoria
-possum %>% 
-  filter (pop == "other") %>% 
-  ggplot(aes(x=sex, fill=sex))+
-  geom_bar()+
-  labs(title = "Count of Possums by Sex Outside of Victoria",
-       x= "Sex",
-       y= "Count")+
+possum %>% filter (pop == "other") %>% 
+  ggplot(aes(x=sex, fill=sex))+ geom_bar()+
+  labs(title = "Count of Possums by Sex Outside of Victoria", x= "Sex", y= "Count")+
   scale_fill_brewer(palette = "Set1")
 ```
 
@@ -201,13 +179,10 @@ The ratio of female to male is almost 2:1 in the short-eared possums outside of 
 ```{r}
 # Compare relative densities of sex by population
 possum %>% 
-  ggplot(aes(x=pop, y=sex, color=pop))+
-  geom_count()+  #this is a count plot
+  ggplot(aes(x=pop, y=sex, color=pop))+ geom_count()+  #this is a count plot
   scale_size_area(max_size = 28)+
-  labs(title="Density of Sex by Population", 
-       x="Population", 
-       y="Sex")+
-  scale_color_brewer(palette = "Accent")
+  labs(title="Density of Sex by Population", x="Population", y="Sex")+
+  scale_color_brewer(palette = "Set1")
 ```
 
 The Victoria population has relatively similar shaped densities while the population outside of Victoria has a noticeably smaller female density to male density.
@@ -218,8 +193,7 @@ Sub Question 2: Morphologies by Populations by sex
 # Morphologies of Possums by Sex in Victoria
 possum %>% filter(pop == "Vic") %>% gather(head, skull, tooth, tail, foot, earconch, eye, chest, belly, key=morph, value=measure) %>% group_by(sex) %>% 
   ggplot(aes(x=morph, y=measure, fill=sex))+ geom_boxplot()+
-  labs(title = "Morphologies of Possums by Sex in Victoria", x= "Sex", y= "Count")+
-  scale_fill_brewer(palette = "Set1")
+  labs(title = "Morphologies of Possums by Sex in Victoria", x= "Sex", y= "Count")+ scale_fill_brewer(palette = "Set1")
 ```
 
 Female and male mountain brushtail possums in Victoria have similar ranges of morphological characteristics, furthering how this particular species display little sexual dimorphism. 
